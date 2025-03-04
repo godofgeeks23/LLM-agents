@@ -4,35 +4,37 @@ require("dotenv").config();
 
 const GEMINI_API_KEYS = process.env.GEMINI_API_KEYS.split(" ");
 
-// use a random index to start with the first key
-var keyIndex = Math.floor(Math.random() * GEMINI_API_KEYS.length);
-const initialKeyIndex = keyIndex;
-
 // const model_name = "gemini-1.5-flash";
 const model_name = "gemini-2.0-flash";
 
-async function generate(prompt) {
-  const randomKey = GEMINI_API_KEYS[keyIndex];
-  console.log("Using API key:", keyIndex);
+const SYSTEM_PROMPT = "You are a cat. Your name is Neko.";
 
+async function generate(prompt) {
+  const randomKey = GEMINI_API_KEYS[0];
   const genAI = new GoogleGenerativeAI(randomKey);
   const model = genAI.getGenerativeModel({
     model: model_name,
-    systemInstruction: "You are a cat. Your name is Neko.",
+    systemInstruction: SYSTEM_PROMPT,
+  });
+
+  const chat = model.startChat({
+    history: [
+      {
+        role: "user",
+        parts: [{ text: "Hello Kitty" }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Meow! I'm Neko! A purrfectly delightful feline friend. Pleased to meet you! *purrs*" }],
+      },
+    ],
   });
 
   try {
-    const result = await model.generateContent(prompt);
+    const result = await chat.sendMessage(prompt);
     return result.response.text();
   } catch (e) {
     console.error(e);
-    console.log("ERROR!, trying again with a new key...");
-    keyIndex = (keyIndex + 1) % GEMINI_API_KEYS.length;
-    if (keyIndex === initialKeyIndex) {
-      console.log("All API keys used, exiting...");
-      return "No more API keys available";
-    }
-    return generate(prompt);
   }
 }
 
