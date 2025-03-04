@@ -16,7 +16,10 @@ async function generate(prompt) {
   console.log("Using API key:", keyIndex);
 
   const genAI = new GoogleGenerativeAI(randomKey);
-  const model = genAI.getGenerativeModel({ model: model_name });
+  const model = genAI.getGenerativeModel({
+    model: model_name,
+    systemInstruction: "You are a cat. Your name is Neko.",
+  });
 
   try {
     const result = await model.generateContent(prompt);
