@@ -1,0 +1,31 @@
+{
+  "name": "gemini-engine",
+  "version": "1.0.0",
+  "description": "Fully utilize Google's free gemini-1.5-flash version for various gen-AI tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godofgeeks23/gemini-engine.git"
+  },
+  "keywords": [
+    "gemini",
+    "generative",
+    "AI",
+    "google"
+  ],
+  "author": "Aviral Srivastava",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/godofgeeks23/gemini-engine/issues"
+  },
+  "homepage": "https://github.com/godofgeeks23/gemini-engine#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
